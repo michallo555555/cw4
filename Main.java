@@ -4,6 +4,7 @@ import java.io.IOException;
 
 class WrongStudentName extends Exception { }
 class WrongAge extends Exception { }
+class WrongDate extends Exception { }
 
 class Main {
     public static Scanner scan = new Scanner(System.in);
@@ -25,20 +26,23 @@ class Main {
             } catch(WrongAge e) {
                 System.out.println("Zły wiek!");
             }
+             catch(WrongDate e) {
+                System.out.println("Zła data!");
+            }
           
         }
     }
 
     public static int menu() {
-        System.out.println("Wciśnij:");
-        System.out.println("1 - aby dodać studenta");
-        System.out.println("2 - aby wypisać wszystkich studentow");
-        System.out.println("3 - aby wyszukaj studenta po imieniu");
-        System.out.println("0 - aby wyjśćc z programu");
+        System.out.println("Wcisnij:");
+        System.out.println("1 - aby dodah studenta");
+        System.out.println("2 - aby wypisać wszystkich studentów");
+        System.out.println("3 - aby wyszukać studenta po imieniu");
+        System.out.println("0 - aby wyjść z programu");
         return scan.nextInt();
     }
 
-    public static String ReadName() throws WrongStudentName, WrongAge {
+    public static String ReadName() throws WrongStudentName, WrongAge, WrongDate {
         scan.nextLine();
         System.out.println("Podaj imie: ");
         String name = scan.nextLine();
@@ -48,15 +52,27 @@ class Main {
         return name;
     }
 
-    public static void exercise1() throws IOException, WrongStudentName, WrongAge {
+    public static void exercise1() throws IOException, WrongStudentName, WrongAge, WrongDate {
         var name = ReadName();
         System.out.println("Podaj wiek: ");
         var age = scan.nextInt();
         scan.nextLine();
       if(age>100 || age<0)
             throw new WrongAge();
-        System.out.println("Podaj date urodzenia DD-MM-YYYY");
+         System.out.println("Podaj dzien urodzenia");
+        var day = scan.nextInt();
+        if(day>31 || day<1)
+            throw new WrongDate();
+        System.out.println("Podaj miesiąc urodzenia");
+        var month = scan.nextInt();
+      if(month>12 || month<1)
+            throw new WrongDate();
+        System.out.println("Podaj rok urodzenia");
+        var year = scan.nextInt();
+      if(year>2021 || year<1)
+            throw new WrongDate();
         var date = scan.nextLine();
+        date = day+"-"+month+"-"+year;
         (new Service1()).addStudent(new Student(name, age, date));
     }
 
